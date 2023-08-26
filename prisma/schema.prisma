@@ -1,0 +1,28 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id String @id @default(uuid())
+  firstName String @map("first_name")
+  lastName String @map("last_name")
+  profileImageUrl String? @map("profile_image_url")
+  email String @unique
+  password String
+  salt String
+
+  @@map("users")
+}
+
+//run below command to create sql table on docker container and it will create a table for us and if change anything
+// we need to run migrations again
+//  npx prisma migrate dev --name create_user_tables(commit comment)

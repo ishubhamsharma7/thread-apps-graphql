@@ -4,6 +4,15 @@ const queries= {
     getUserToken : async(_:any,payload:{email:string;password:string}) => {
         const token = await UserService.getUserToken({email:payload.email,password:payload.password})
         return token
+    },
+    getCurrentLoggedInUser: async(_:any,params:any,context:any)=>{
+        if(context && context.user) {
+            const id = context.user.id
+            const user = await UserService.getUserById(id)
+
+            return user
+        }
+        throw new Error('i dont know you ')
     }
 }
 
